@@ -4,7 +4,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(custom-enabled-themes (quote (wombat)))
- )
+ '(org-log-done (quote note)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -19,11 +19,16 @@
 (setq inhibit-startup-echo-area-message t)
 (setq initial-scratch-message nil)
 
-(column-number-mode t)  ; show column numbers
+;; show column numbers
+(column-number-mode t)
 
+;; set up package repos
 (setq package-archives '(("gnu" . "http://elpa.gnu.org/packages/")
                          ("marmalade" . "http://marmalade-repo.org/packages/")
                          ("melpa" . "http://melpa.milkbox.net/packages/")))
 
+;; initialise packages
 (package-initialize)
+
+;; enable evil (vi emulation)
 (evil-mode 1)
