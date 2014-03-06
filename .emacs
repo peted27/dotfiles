@@ -5,6 +5,8 @@
  ;; If there is more than one, they won't work right.
  '(custom-enabled-themes (quote (wombat)))
  '(org-log-done (quote note))
+ '(org-log-reschedule (quote note))
+ '(org-log-redeadline (quote note))
  '(org-blank-before-new-entry (quote ((heading . t) (plain-list-item . t)))))
 
 
