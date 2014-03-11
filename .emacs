@@ -4,6 +4,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(custom-enabled-themes (quote (wombat)))
+ '(org-archive-default-command (quote org-archive-to-archive-sibling))
  '(org-log-done (quote note))
  '(org-log-reschedule (quote note))
  '(org-log-redeadline (quote note))
