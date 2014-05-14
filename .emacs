@@ -36,12 +36,16 @@
 ;; initialise packages
 (package-initialize)
 
+;; add local dir to path
+(add-to-list 'load-path "~/.emacs.d/lisp/")
+
 ;; check require packages are installed
 (require 'evil)
 (require 'magit)
 (require 'org)
 (require 'paredit)
 (require 'undo-tree)
+(require 'gambit)
 
 ;; enable evil (vi emulation)
 (evil-mode 1)
@@ -54,3 +58,10 @@
 (add-hook 'lisp-mode-hook             #'enable-paredit-mode)
 (add-hook 'lisp-interaction-mode-hook #'enable-paredit-mode)
 (add-hook 'scheme-mode-hook           #'enable-paredit-mode)
+
+;; add gambit hooks
+(autoload 'gambit-inferior-mode "gambit" "Hook Gambit mode into cmuscheme.")
+(autoload 'gambit-mode "gambit" "Hook Gambit mode into scheme.")
+(add-hook 'inferior-scheme-mode-hook (function gambit-inferior-mode))
+(add-hook 'scheme-mode-hook (function gambit-mode))
+(setq scheme-program-name "gsi -:d-")
