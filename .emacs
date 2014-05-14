@@ -3,7 +3,6 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(custom-enabled-themes (quote (wombat)))
  '(org-archive-default-command (quote org-archive-to-archive-sibling))
  '(org-log-done (quote note))
  '(org-log-reschedule (quote note))
@@ -25,8 +24,14 @@
 (setq inhibit-startup-echo-area-message t)
 (setq initial-scratch-message nil)
 
+;; load wombat theme
+(load-theme 'wombat t)
+
 ;; show column numbers
 (column-number-mode t)
+
+;; turn off backup files
+(setq make-backup-files nil)
 
 ;; set up package repos
 (setq package-archives '(("gnu" . "http://elpa.gnu.org/packages/")
