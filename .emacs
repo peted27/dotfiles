@@ -82,5 +82,14 @@
 	       (setq org-log-redeadline (quote note))
 	       (setq org-blank-before-new-entry (quote ((heading . t) (plain-list-item . t))))))
 
+;; configure pretty symbols
+(req-package pretty-symbols
+  :init
+  (progn
+    (add-hook 'emacs-lisp-mode-hook 'pretty-symbols-mode)
+    (add-hook 'lisp-mode-hook 'pretty-symbols-mode)
+    (add-hook 'lisp-interaction-mode-hook 'pretty-symbols-mode)
+    (add-hook 'scheme-mode-hook 'pretty-symbols-mode )))
+
 ;; load packages
 (req-package-finish)
