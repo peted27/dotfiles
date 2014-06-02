@@ -44,52 +44,72 @@
 
 ;; enable evil (vi emulation)
 (req-package evil
-	     :require undo-tree
-	     :ensure evil
-	     :init
-	     (progn 
-	       (evil-mode 1)))
+  :require undo-tree
+  :ensure evil
+  :init
+  (progn 
+    (evil-mode 1)))
+
+;; clojure
+(req-package clojure-mode)
+
+;; cider for repl
+(req-package cider
+  :require clojure-mode
+  :init
+  (progn
+    (add-hook 'clojure-mode-hook 'cider-mode)
+    (cider-jack-in)))
 
 ;; add paredit hooks
 (req-package paredit
-	     :init
-	     (progn 
-	       (autoload 'enable-paredit-mode "paredit" "Turn on pseudo-structural editing of Lisp code." t)
-	       (add-hook 'emacs-lisp-mode-hook       #'enable-paredit-mode)
-	       (add-hook 'eval-expression-minibuffer-setup-hook #'enable-paredit-mode)
-	       (add-hook 'ielm-mode-hook             #'enable-paredit-mode)
-	       (add-hook 'lisp-mode-hook             #'enable-paredit-mode)
-	       (add-hook 'lisp-interaction-mode-hook #'enable-paredit-mode)
-	       (add-hook 'scheme-mode-hook           #'enable-paredit-mode)))
+  :init
+  (progn 
+    (autoload 'enable-paredit-mode "paredit" "Turn on pseudo-structural editing of Lisp code." t)
+    (add-hook 'emacs-lisp-mode-hook       'enable-paredit-mode)
+    (add-hook 'eval-expression-minibuffer-setup-hook 'enable-paredit-mode)
+    (add-hook 'ielm-mode-hook             'enable-paredit-mode)
+    (add-hook 'lisp-mode-hook             'enable-paredit-mode)
+    (add-hook 'lisp-interaction-mode-hook 'enable-paredit-mode)
+    (add-hook 'clojure-mode-hook          'enable-paredit-mode)
+    (add-hook 'cider-repl-mode-hook       'enable-paredit-mode)
+    (add-hook 'scheme-mode-hook           'enable-paredit-mode)))
 
 ;; add gambit hooks
 (req-package gambit
-	     :init
-	     (progn 
-	       (autoload 'gambit-inferior-mode "gambit" "Hook Gambit mode into cmuscheme.")
-	       (autoload 'gambit-mode "gambit" "Hook Gambit mode into scheme.")
-	       (add-hook 'inferior-scheme-mode-hook (function gambit-inferior-mode))
-	       (add-hook 'scheme-mode-hook (function gambit-mode))
-	       (setq scheme-program-name "gsi -:d-")))
+  :init
+  (progn 
+    (autoload 'gambit-inferior-mode "gambit" "Hook Gambit mode into cmuscheme.")
+    (autoload 'gambit-mode "gambit" "Hook Gambit mode into scheme.")
+    (add-hook 'inferior-scheme-mode-hook 'gambit-inferior-mode)
+    (add-hook 'scheme-mode-hook          'gambit-mode)
+    (setq scheme-program-name "gsi -:d-")))
 
 ;; configure org mode
 (req-package org 
-	     :init
-	     (progn 
-	       (setq org-archive-default-command (quote org-archive-to-archive-sibling))
-	       (setq org-log-done (quote note))
-	       (setq org-log-reschedule (quote note))
-	       (setq org-log-redeadline (quote note))
-	       (setq org-blank-before-new-entry (quote ((heading . t) (plain-list-item . t))))))
+  :init
+  (progn 
+    (setq org-archive-default-command (quote org-archive-to-archive-sibling))
+    (setq org-log-done (quote note))
+    (setq org-log-reschedule (quote note))
+    (setq org-log-redeadline (quote note))
+    (setq org-blank-before-new-entry (quote ((heading . t) (plain-list-item . t))))))
 
 ;; configure pretty symbols
 (req-package pretty-symbols
   :init
   (progn
     (add-hook 'emacs-lisp-mode-hook 'pretty-symbols-mode)
-    (add-hook 'lisp-mode-hook 'pretty-symbols-mode)
+    (add-hook 'lisp-mode-hook       'pretty-symbols-mode)
     (add-hook 'lisp-interaction-mode-hook 'pretty-symbols-mode)
-    (add-hook 'scheme-mode-hook 'pretty-symbols-mode )))
+    (add-hook 'clojure-mode-hook    'pretty-symbols-mode)
+    (add-hook 'scheme-mode-hook     'pretty-symbols-mode)))
+
+;; line numbers
+(req-package linum
+  :config
+  (add-hook 'prog-mode-hook
+            '(lambda () (linum-mode 1)))) 
 
 ;; load packages
 (req-package-finish)
