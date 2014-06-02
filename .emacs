@@ -58,8 +58,7 @@
   :require clojure-mode
   :init
   (progn
-    (add-hook 'clojure-mode-hook 'cider-mode)
-    (cider-jack-in)))
+    (add-hook 'clojure-mode-hook 'cider-mode)))
 
 ;; add paredit hooks
 (req-package paredit
