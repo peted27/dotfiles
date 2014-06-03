@@ -28,6 +28,9 @@
 ;; turn off backup files
 (setq make-backup-files nil)
 
+;; add local dir to path
+(add-to-list 'load-path "~/.emacs.d/lisp/")
+
 ;; set up package repos
 (setq package-archives '(("gnu" . "http://elpa.gnu.org/packages/")
                          ("marmalade" . "http://marmalade-repo.org/packages/")
@@ -36,8 +39,12 @@
 ;; initialise packages
 (package-initialize)
 
-;; add local dir to path
-(add-to-list 'load-path "~/.emacs.d/lisp/")
+;; install some low level packages before req-package takes over
+(defvar package-list `(req-package))
+(dolist (p package-list)
+    (when (not (package-installed-p p))
+      (print (format "Installing %s" p))
+      (package-install p)))
 
 ;; using req-package to manage packages and configuration
 (require 'req-package)
@@ -50,14 +57,12 @@
   (progn 
     (evil-mode 1)))
 
-;; clojure
-(req-package clojure-mode)
-
-;; cider for repl
+;; cider
 (req-package cider
   :require clojure-mode
   :init
   (progn
+    (add-hook 'cider-repl-mode-hook (lambda () (evil-emacs-state)))
     (add-hook 'clojure-mode-hook 'cider-mode)))
 
 ;; add paredit hooks
