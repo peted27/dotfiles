@@ -99,6 +99,9 @@
     (setq org-log-redeadline (quote note))
     (setq org-blank-before-new-entry (quote ((heading . t) (plain-list-item . t))))))
 
+;; erlang
+(req-package erlang)
+
 ;; configure pretty symbols
 (req-package pretty-symbols
   :init
