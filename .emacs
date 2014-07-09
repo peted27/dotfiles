@@ -39,6 +39,9 @@
 ;; initialise packages
 (package-initialize)
 
+;; set scheme to chicken
+(setq scheme-program-name "csi -:c")
+
 ;; install some low level packages before req-package takes over
 (defvar package-list `(req-package))
 (dolist (p package-list)
@@ -80,14 +83,14 @@
     (add-hook 'scheme-mode-hook           'enable-paredit-mode)))
 
 ;; add gambit hooks
-(req-package gambit
-  :init
-  (progn 
-    (autoload 'gambit-inferior-mode "gambit" "Hook Gambit mode into cmuscheme.")
-    (autoload 'gambit-mode "gambit" "Hook Gambit mode into scheme.")
-    (add-hook 'inferior-scheme-mode-hook 'gambit-inferior-mode)
-    (add-hook 'scheme-mode-hook          'gambit-mode)
-    (setq scheme-program-name "gsi -:d-")))
+;; (req-package gambit
+;;   :init
+;;   (progn 
+;;     (autoload 'gambit-inferior-mode "gambit" "Hook Gambit mode into cmuscheme.")
+;;     (autoload 'gambit-mode "gambit" "Hook Gambit mode into scheme.")
+;;     (add-hook 'inferior-scheme-mode-hook 'gambit-inferior-mode)
+;;     (add-hook 'scheme-mode-hook          'gambit-mode)
+;;     (setq scheme-program-name "gsi -:d-")))
 
 ;; configure org mode
 (req-package org 
@@ -101,6 +104,9 @@
 
 ;; erlang
 (req-package erlang)
+
+;; magit
+(req-package magit)
 
 ;; configure pretty symbols
 (req-package pretty-symbols
@@ -117,6 +123,15 @@
   :config
   (add-hook 'prog-mode-hook
             '(lambda () (linum-mode 1)))) 
+
+;; add #! automatically to .scm files
+(req-package  autoinsert
+  :init
+  (progn
+    (add-hook 'find-file-hooks 'auto-insert)
+    (setq auto-insert-alist 
+	  '(("\\.scm" . 
+	     (insert "#!/bin/sh\n#| -*- scheme -*-\nexec csi -s $0 \"$@\"\n|#\n"))))))
 
 ;; load packages
 (req-package-finish)
