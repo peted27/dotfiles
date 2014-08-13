@@ -39,8 +39,8 @@
 ;; initialise packages
 (package-initialize)
 
-;; set scheme to chicken
-;(setq scheme-program-name "csi -:c")
+;; set c indentation method
+(setq c-default-style "bsd")
 
 ;; install some low level packages before req-package takes over
 (defvar package-list `(req-package))
@@ -60,14 +60,6 @@
   (progn 
     (evil-mode 1)))
 
-;; cider
-(req-package cider
-  :require clojure-mode
-  :init
-  (progn
-    (add-hook 'cider-repl-mode-hook (lambda () (evil-emacs-state)))
-    (add-hook 'clojure-mode-hook 'cider-mode)))
-
 ;; add paredit hooks
 (req-package paredit
   :init
@@ -78,8 +70,6 @@
     (add-hook 'ielm-mode-hook             'enable-paredit-mode)
     (add-hook 'lisp-mode-hook             'enable-paredit-mode)
     (add-hook 'lisp-interaction-mode-hook 'enable-paredit-mode)
-    (add-hook 'clojure-mode-hook          'enable-paredit-mode)
-    (add-hook 'cider-repl-mode-hook       'enable-paredit-mode)
     (add-hook 'scheme-mode-hook           'enable-paredit-mode)))
 
 ;; add gambit hooks
@@ -102,9 +92,6 @@
     (setq org-log-redeadline (quote note))
     (setq org-blank-before-new-entry (quote ((heading . t) (plain-list-item . t))))))
 
-;; erlang
-(req-package erlang)
-
 ;; magit
 (req-package magit)
 
@@ -115,7 +102,6 @@
     (add-hook 'emacs-lisp-mode-hook 'pretty-symbols-mode)
     (add-hook 'lisp-mode-hook       'pretty-symbols-mode)
     (add-hook 'lisp-interaction-mode-hook 'pretty-symbols-mode)
-    (add-hook 'clojure-mode-hook    'pretty-symbols-mode)
     (add-hook 'scheme-mode-hook     'pretty-symbols-mode)))
 
 ;; line numbers
@@ -123,15 +109,6 @@
   :config
   (add-hook 'prog-mode-hook
             '(lambda () (linum-mode 1)))) 
-
-;; add #! automatically to .scm files
-;; (req-package  autoinsert
-;;   :init
-;;   (progn
-;;     (add-hook 'find-file-hooks 'auto-insert)
-;;     (setq auto-insert-alist 
-;; 	  '(("\\.scm" . 
-;; 	     (insert "#!/bin/sh\n#| -*- scheme -*-\nexec csi -s $0 \"$@\"\n|#\n"))))))
 
 ;; load packages
 (req-package-finish)
