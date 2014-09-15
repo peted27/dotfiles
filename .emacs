@@ -60,6 +60,14 @@
   (progn 
     (evil-mode 1)))
 
+;; cider
+(req-package cider
+  :require clojure-mode
+  :init
+  (progn
+    (add-hook 'cider-repl-mode-hook (lambda () (evil-emacs-state)))
+    (add-hook 'clojure-mode-hook 'cider-mode)))
+
 ;; add paredit hooks
 (req-package paredit
   :init
@@ -70,6 +78,8 @@
     (add-hook 'ielm-mode-hook             'enable-paredit-mode)
     (add-hook 'lisp-mode-hook             'enable-paredit-mode)
     (add-hook 'lisp-interaction-mode-hook 'enable-paredit-mode)
+    (add-hook 'clojure-mode-hook          'enable-paredit-mode)
+    (add-hook 'cider-repl-mode-hook       'enable-paredit-mode)
     (add-hook 'scheme-mode-hook           'enable-paredit-mode)))
 
 ;; add gambit hooks
@@ -102,6 +112,7 @@
     (add-hook 'emacs-lisp-mode-hook 'pretty-symbols-mode)
     (add-hook 'lisp-mode-hook       'pretty-symbols-mode)
     (add-hook 'lisp-interaction-mode-hook 'pretty-symbols-mode)
+    (add-hook 'clojure-mode-hook    'pretty-symbols-mode)
     (add-hook 'scheme-mode-hook     'pretty-symbols-mode)))
 
 ;; line numbers
