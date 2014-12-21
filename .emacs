@@ -87,6 +87,12 @@
     (add-hook 'cider-repl-mode-hook       'enable-paredit-mode)
     (add-hook 'scheme-mode-hook           'enable-paredit-mode)))
 
+;; go
+(req-package go-mode
+  :init
+  (progn
+    (add-hook 'before-save-hook 'gofmt-before-save)))
+
 ;; add gambit hooks
 (req-package gambit
   :init
@@ -107,14 +113,20 @@
     (setq org-log-redeadline (quote note))
     (setq org-blank-before-new-entry (quote ((heading . t) (plain-list-item . t))))))
 
-;; magit
-(req-package magit)
-
-;; powerline
-(req-package powerline
+;; snippets
+(req-package yasnippet
   :init
   (progn
-    (powerline-default-theme)))
+    (add-hook 'prog-mode-hook '(lambda () (yas-minor-mode)))))
+
+;; auto complete
+(req-package company
+  :init
+  (progn
+    (add-hook 'prog-mode-hook '(lambda () (company-mode)))))
+
+;; magit
+(req-package magit)
 
 ;; helm
 (req-package helm-config
@@ -138,16 +150,30 @@
     
     (helm-mode 1)))
 
+;; projectile
+(req-package projectile
+  :require helm-projectile
+  :init
+  (progn
+    (setq projectile-mode-line-lighter "(Pr)")
+    (projectile-global-mode)))
+
 ;; diminish
 (req-package diminish
   :init
   (progn
     (eval-after-load "paredit" '(diminish 'paredit-mode " (P)"))
-    (eval-after-load "undo-tree" '(diminish 'undo-tree-mode " (U)"))
+    (eval-after-load "yasnippet" '(diminish 'yas-minor-mode " (Y)"))
+    (eval-after-load "undo-tree" '(diminish 'undo-tree-mode " (UT)"))
     (eval-after-load "helm-mode" '(diminish 'helm-mode " (H)"))
-    (eval-after-load "magit" '(diminish 'magit-auto-revert-mode " (R)"))
-    (eval-after-load "pretty-symbols" '(diminish 'pretty-symbols-mode " (λ)"))
-    ))
+    (eval-after-load "magit" '(diminish 'magit-auto-revert-mode " (RM)"))
+    (eval-after-load "pretty-symbols" '(diminish 'pretty-symbols-mode " (λ)"))))
+
+;; powerline
+(req-package powerline
+  :init
+  (progn
+    (powerline-default-theme)))
 
 ;; configure pretty symbols
 (req-package pretty-symbols
