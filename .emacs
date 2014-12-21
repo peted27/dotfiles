@@ -25,6 +25,11 @@
 ;; show column numbers
 (column-number-mode t)
 
+;; lose menus and toolbars
+(menu-bar-mode 0)
+(tool-bar-mode 0)
+(scroll-bar-mode 0)
+
 ;; turn off backup files
 (setq make-backup-files nil)
 
@@ -34,7 +39,7 @@
 ;; set up package repos
 (setq package-archives '(("gnu" . "http://elpa.gnu.org/packages/")
                          ("marmalade" . "http://marmalade-repo.org/packages/")
-                         ("melpa" . "http://melpa.milkbox.net/packages/")))
+                         ("melpa-stable" . "http://stable.melpa.org/packages/")))
 
 ;; initialise packages
 (package-initialize)
@@ -104,6 +109,45 @@
 
 ;; magit
 (req-package magit)
+
+;; powerline
+(req-package powerline
+  :init
+  (progn
+    (powerline-default-theme)))
+
+;; helm
+(req-package helm-config
+  :init
+  (progn
+    ;; The default "C-x c" is quite close to "C-x C-c", which quits Emacs.
+    ;; Changed to "C-c h". Note: We must set "C-c h" globally, because we
+    ;; cannot change `helm-command-prefix-key' once `helm-config' is loaded.
+    (global-set-key (kbd "C-c h") 'helm-command-prefix)
+    (global-unset-key (kbd "C-x c"))
+    
+    (define-key global-map (kbd "<tab>") 'helm-execute-persistent-action) ; rebind tab to run persistent action
+    (define-key global-map (kbd "C-i") 'helm-execute-persistent-action) ; make TAB works in terminal
+    (define-key global-map (kbd "C-z")  'helm-select-action) ; list actions using C-z
+
+    (setq helm-split-window-in-side-p           t ; open helm buffer inside current window, not occupy whole other window
+	  helm-move-to-line-cycle-in-source     t ; move to end or beginning of source when reaching top or bottom of source.
+	  helm-ff-search-library-in-sexp        t ; search for library in `require' and `declare-function' sexp.
+	  helm-scroll-amount                    8 ; scroll 8 lines other window using M-<next>/M-<prior>
+	  helm-ff-file-name-history-use-recentf t)
+    
+    (helm-mode 1)))
+
+;; diminish
+(req-package diminish
+  :init
+  (progn
+    (eval-after-load "paredit" '(diminish 'paredit-mode " (P)"))
+    (eval-after-load "undo-tree" '(diminish 'undo-tree-mode " (U)"))
+    (eval-after-load "helm-mode" '(diminish 'helm-mode " (H)"))
+    (eval-after-load "magit" '(diminish 'magit-auto-revert-mode " (R)"))
+    (eval-after-load "pretty-symbols" '(diminish 'pretty-symbols-mode " (λ)"))
+    ))
 
 ;; configure pretty symbols
 (req-package pretty-symbols
