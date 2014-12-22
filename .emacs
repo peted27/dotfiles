@@ -39,7 +39,7 @@
 ;; set up package repos
 (setq package-archives '(("gnu" . "http://elpa.gnu.org/packages/")
                          ("marmalade" . "http://marmalade-repo.org/packages/")
-                         ("melpa-stable" . "http://stable.melpa.org/packages/")))
+                         ("melpa" . "http://melpa.org/packages/")))
 
 ;; initialise packages
 (package-initialize)
@@ -65,14 +65,6 @@
   (progn 
     (evil-mode 1)))
 
-;; cider
-(req-package cider
-  :require clojure-mode
-  :init
-  (progn
-    (add-hook 'cider-repl-mode-hook (lambda () (evil-emacs-state)))
-    (add-hook 'clojure-mode-hook 'cider-mode)))
-
 ;; add paredit hooks
 (req-package paredit
   :init
@@ -89,9 +81,14 @@
 
 ;; go
 (req-package go-mode
+  :require go-eldoc company-go
   :init
   (progn
-    (add-hook 'before-save-hook 'gofmt-before-save)))
+    (add-hook 'before-save-hook 'gofmt-before-save)
+    (add-hook 'go-mode-hook  'go-eldoc-setup)
+    (add-hook 'go-mode-hook (lambda ()
+			      (set (make-local-variable 'company-backends) '(company-go))
+			      (company-mode)))))
 
 ;; add gambit hooks
 (req-package gambit
@@ -128,35 +125,11 @@
 ;; magit
 (req-package magit)
 
-;; helm
-(req-package helm-config
+;; powerline
+(req-package powerline
   :init
   (progn
-    ;; The default "C-x c" is quite close to "C-x C-c", which quits Emacs.
-    ;; Changed to "C-c h". Note: We must set "C-c h" globally, because we
-    ;; cannot change `helm-command-prefix-key' once `helm-config' is loaded.
-    (global-set-key (kbd "C-c h") 'helm-command-prefix)
-    (global-unset-key (kbd "C-x c"))
-    
-    (define-key global-map (kbd "<tab>") 'helm-execute-persistent-action) ; rebind tab to run persistent action
-    (define-key global-map (kbd "C-i") 'helm-execute-persistent-action) ; make TAB works in terminal
-    (define-key global-map (kbd "C-z")  'helm-select-action) ; list actions using C-z
-
-    (setq helm-split-window-in-side-p           t ; open helm buffer inside current window, not occupy whole other window
-	  helm-move-to-line-cycle-in-source     t ; move to end or beginning of source when reaching top or bottom of source.
-	  helm-ff-search-library-in-sexp        t ; search for library in `require' and `declare-function' sexp.
-	  helm-scroll-amount                    8 ; scroll 8 lines other window using M-<next>/M-<prior>
-	  helm-ff-file-name-history-use-recentf t)
-    
-    (helm-mode 1)))
-
-;; projectile
-(req-package projectile
-  :require helm-projectile
-  :init
-  (progn
-    (setq projectile-mode-line-lighter "(Pr)")
-    (projectile-global-mode)))
+    (powerline-default-theme)))
 
 ;; diminish
 (req-package diminish
@@ -164,16 +137,12 @@
   (progn
     (eval-after-load "paredit" '(diminish 'paredit-mode " (P)"))
     (eval-after-load "yasnippet" '(diminish 'yas-minor-mode " (Y)"))
-    (eval-after-load "undo-tree" '(diminish 'undo-tree-mode " (UT)"))
+    (eval-after-load "undo-tree" '(diminish 'undo-tree-mode " (U)"))
     (eval-after-load "helm-mode" '(diminish 'helm-mode " (H)"))
-    (eval-after-load "magit" '(diminish 'magit-auto-revert-mode " (RM)"))
+    (eval-after-load "company" '(diminish 'company-mode " (C)"))
+    (eval-after-load "eldoc" '(diminish 'eldoc-mode " (E)"))
+    (eval-after-load "magit" '(diminish 'magit-auto-revert-mode " (R)"))
     (eval-after-load "pretty-symbols" '(diminish 'pretty-symbols-mode " (λ)"))))
-
-;; powerline
-(req-package powerline
-  :init
-  (progn
-    (powerline-default-theme)))
 
 ;; configure pretty symbols
 (req-package pretty-symbols
