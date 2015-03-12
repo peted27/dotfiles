@@ -122,6 +122,12 @@
   (progn
     (add-hook 'prog-mode-hook '(lambda () (company-mode)))))
 
+;; flycheck
+(req-package flycheck
+  :init
+  (progn
+    (add-hook 'go-mode-hook 'flycheck-mode)))
+
 ;; magit
 (req-package magit)
 
