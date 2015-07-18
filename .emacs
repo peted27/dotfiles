@@ -19,16 +19,16 @@
 (setq inhibit-startup-echo-area-message t)
 (setq initial-scratch-message nil)
 
+;; lose menus and toolbars
+(menu-bar-mode 0)
+(tool-bar-mode 0)
+(scroll-bar-mode 0)
+
 ;; load wombat theme
 (load-theme 'wombat t)
 
 ;; show column numbers
 (column-number-mode t)
-
-;; lose menus and toolbars
-(menu-bar-mode 0)
-(tool-bar-mode 0)
-(scroll-bar-mode 0)
 
 ;; turn off backup files
 (setq make-backup-files nil)
@@ -114,7 +114,10 @@
 (req-package yasnippet
   :init
   (progn
-    (add-hook 'prog-mode-hook '(lambda () (yas-minor-mode)))))
+    (add-hook 'prog-mode-hook '(lambda () (yas-minor-mode))))
+  :config
+  (progn
+    (add-to-list 'yas-snippet-dirs "~/.emacs.d/yasnippet-golang")))
 
 ;; auto complete
 (req-package company
@@ -133,21 +136,21 @@
 
 ;; powerline
 (req-package powerline
-  :init
+  :config
   (progn
-    (powerline-default-theme)))
+    (powerline-center-evil-theme)))
 
 ;; diminish
-(req-package diminish
-  :init
-  (progn
-    (eval-after-load "paredit" '(diminish 'paredit-mode " (P)"))
-    (eval-after-load "yasnippet" '(diminish 'yas-minor-mode " (Y)"))
-    (eval-after-load "undo-tree" '(diminish 'undo-tree-mode " (U)"))
-    (eval-after-load "helm-mode" '(diminish 'helm-mode " (H)"))
-    (eval-after-load "company" '(diminish 'company-mode " (C)"))
-    (eval-after-load "eldoc" '(diminish 'eldoc-mode " (E)"))
-    (eval-after-load "pretty-symbols" '(diminish 'pretty-symbols-mode " (λ)"))))
+;; (req-package diminish
+;;   :init
+;;   (progn
+;;     (eval-after-load "paredit" '(diminish 'paredit-mode " (P)"))
+;;     (eval-after-load "yasnippet" '(diminish 'yas-minor-mode " (Y)"))
+;;     (eval-after-load "undo-tree" '(diminish 'undo-tree-mode " (U)"))
+;;     (eval-after-load "helm-mode" '(diminish 'helm-mode " (H)"))
+;;     (eval-after-load "company" '(diminish 'company-mode " (C)"))
+;;     (eval-after-load "eldoc" '(diminish 'eldoc-mode " (E)"))
+;;     (eval-after-load "pretty-symbols" '(diminish 'pretty-symbols-mode " (λ)"))))
 
 ;; configure pretty symbols
 (req-package pretty-symbols
