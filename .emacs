@@ -138,7 +138,7 @@
 (req-package powerline
   :config
   (progn
-    (powerline-center-evil-theme)))
+    (powerline-vim-theme)))
 
 ;; diminish
 ;; (req-package diminish
