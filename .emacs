@@ -81,7 +81,7 @@
 
 ;; go
 (req-package go-mode
-  :require go-eldoc company-go
+  :require (go-eldoc company-go)
   :init
   (progn
     (add-hook 'before-save-hook 'gofmt-before-save)
@@ -147,7 +147,6 @@
     (eval-after-load "helm-mode" '(diminish 'helm-mode " (H)"))
     (eval-after-load "company" '(diminish 'company-mode " (C)"))
     (eval-after-load "eldoc" '(diminish 'eldoc-mode " (E)"))
-    (eval-after-load "magit" '(diminish 'magit-auto-revert-mode " (R)"))
     (eval-after-load "pretty-symbols" '(diminish 'pretty-symbols-mode " (λ)"))))
 
 ;; configure pretty symbols
