@@ -20,10 +20,13 @@ Plugin 'gmarik/Vundle.vim'
 " Keep Plugin commands between vundle#begin/end.
 
 " my plugins here...
+Plugin 'tpope/vim-fugitive'
 Plugin 'fatih/vim-go'
 Plugin 'Valloric/YouCompleteMe'
 Plugin 'majutsushi/tagbar'
 Plugin 'bling/vim-airline'
+Plugin 'scrooloose/syntastic'
+Plugin 'scrooloose/nerdtree'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -79,3 +82,9 @@ au FileType go nmap <Leader>e <Plug>(go-rename)
 
 " tagbar config
 nmap <F8> :TagbarToggle<CR>
+
+" nerdtree config
+map <F7> :NERDTreeToggle<CR>
+
+" airline config
+let g:airline_theme='murmur'
