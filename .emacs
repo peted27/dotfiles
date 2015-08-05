@@ -134,6 +134,10 @@
 ;; magit
 (req-package magit)
 
+;; auctex
+(req-package tex-site
+  :ensure auctex)
+
 ;; powerline
 (req-package powerline
   :config
