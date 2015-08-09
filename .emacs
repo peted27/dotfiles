@@ -136,7 +136,13 @@
 
 ;; auctex
 (req-package tex-site
-  :ensure auctex)
+  :ensure auctex
+  :config
+  (progn
+    (add-hook 'LaTeX-mode-hook 'flyspell-mode)
+    (setq ispell-program-name "aspell")
+    (setq ispell-list-command "--list")
+    (setq ispell-dictionary "english")))
 
 ;; powerline
 (req-package powerline
