@@ -100,6 +100,9 @@
     (add-hook 'scheme-mode-hook          'gambit-mode)
     (setq scheme-program-name "gsi -:d-")))
 
+;; racket mode
+(req-package racket-mode)
+
 ;; configure org mode
 (req-package org 
   :init
