@@ -75,6 +75,7 @@
     (add-hook 'ielm-mode-hook             'enable-paredit-mode)
     (add-hook 'lisp-mode-hook             'enable-paredit-mode)
     (add-hook 'lisp-interaction-mode-hook 'enable-paredit-mode)
+    (add-hook 'racket-mode-hook           'enable-paredit-mode)
     (add-hook 'clojure-mode-hook          'enable-paredit-mode)
     (add-hook 'cider-repl-mode-hook       'enable-paredit-mode)
     (add-hook 'scheme-mode-hook           'enable-paredit-mode)))
@@ -153,17 +154,6 @@
   (progn
     (powerline-vim-theme)))
 
-;; diminish
-;; (req-package diminish
-;;   :init
-;;   (progn
-;;     (eval-after-load "paredit" '(diminish 'paredit-mode " (P)"))
-;;     (eval-after-load "yasnippet" '(diminish 'yas-minor-mode " (Y)"))
-;;     (eval-after-load "undo-tree" '(diminish 'undo-tree-mode " (U)"))
-;;     (eval-after-load "helm-mode" '(diminish 'helm-mode " (H)"))
-;;     (eval-after-load "company" '(diminish 'company-mode " (C)"))
-;;     (eval-after-load "eldoc" '(diminish 'eldoc-mode " (E)"))
-;;     (eval-after-load "pretty-symbols" '(diminish 'pretty-symbols-mode " (λ)"))))
 
 ;; configure pretty symbols
 (req-package pretty-symbols
@@ -174,6 +164,15 @@
     (add-hook 'lisp-interaction-mode-hook 'pretty-symbols-mode)
     (add-hook 'clojure-mode-hook    'pretty-symbols-mode)
     (add-hook 'scheme-mode-hook     'pretty-symbols-mode)))
+
+ 
+;; cider
+(req-package cider
+  :require clojure-mode
+  :init
+  (progn
+    (add-hook 'cider-repl-mode-hook (lambda () (evil-emacs-state)))
+    (add-hook 'clojure-mode-hook 'cider-mode)))
 
 ;; line numbers
 (req-package linum
