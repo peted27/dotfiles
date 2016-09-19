@@ -52,6 +52,7 @@
 (dolist (p package-list)
     (when (not (package-installed-p p))
       (print (format "Installing %s" p))
+      (package-refresh-contents)
       (package-install p)))
 
 ;; using req-package to manage packages and configuration
