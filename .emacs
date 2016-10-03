@@ -24,9 +24,6 @@
 (tool-bar-mode 0)
 (scroll-bar-mode 0)
 
-;; load wombat theme
-(load-theme 'wombat t)
-
 ;; show column numbers
 (column-number-mode t)
 
@@ -57,6 +54,12 @@
 
 ;; using req-package to manage packages and configuration
 (require 'req-package)
+
+;; monokai theme
+(req-package monokai-theme
+  :init
+  (progn
+    (load-theme monokai)))
 
 ;; enable evil (vi emulation)
 (req-package evil
