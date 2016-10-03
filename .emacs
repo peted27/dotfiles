@@ -59,7 +59,7 @@
 (req-package monokai-theme
   :init
   (progn
-    (load-theme monokai)))
+    (load-theme 'monokai t)))
 
 ;; enable evil (vi emulation)
 (req-package evil
