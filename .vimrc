@@ -28,6 +28,7 @@ Plugin 'vim-airline/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
 Plugin 'scrooloose/syntastic'
 Plugin 'scrooloose/nerdtree'
+Plugin 'altercation/vim-colors-solarized'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -52,7 +53,8 @@ syntax enable
 set number
 
 " startup theme
-colorscheme slate
+set background=dark
+colorscheme solarized
 
 " font setting
 if has("gui_running")
