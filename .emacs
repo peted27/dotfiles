@@ -56,10 +56,10 @@
 (require 'req-package)
 
 ;; monokai theme
-(req-package monokai-theme
+(req-package solarized-theme
   :init
   (progn
-    (load-theme 'monokai t)))
+    (load-theme 'solarized-dark t)))
 
 ;; enable evil (vi emulation)
 (req-package evil
