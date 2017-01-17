@@ -90,4 +90,4 @@ nmap <F8> :TagbarToggle<CR>
 map <F7> :NERDTreeToggle<CR>
 
 " airline config
-let g:airline_theme='murmur'
+let g:airline_theme='solarized'
