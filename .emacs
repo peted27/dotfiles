@@ -178,6 +178,16 @@
     (add-hook 'cider-repl-mode-hook (lambda () (evil-emacs-state)))
     (add-hook 'clojure-mode-hook 'cider-mode)))
 
+;; nim lang
+(req-package nim-mode
+  :require indent-guide
+  :init
+  (progn
+    (add-hook 'nim-mode-hook 'company-mode)
+    (add-hook 'nim-mode-hook 'indent-guide-mode)
+    (add-to-list 'company-backends
+		 '(company-nim :with company-nim-builtin))))
+
 ;; line numbers
 (req-package linum
   :config
