@@ -20,7 +20,7 @@
 (setq initial-scratch-message nil)
 
 ;; lose menus and toolbars
-(menu-bar-mode 0)
+;; (menu-bar-mode 0)
 (tool-bar-mode 0)
 (scroll-bar-mode 0)
 
@@ -62,12 +62,17 @@
     (load-theme 'solarized-dark t)))
 
 ;; enable evil (vi emulation)
-(req-package evil
-  :require undo-tree
-  :ensure evil
+;; (req-package evil
+;;   :require undo-tree
+;;   :ensure evil
+;;   :init
+;;   (progn 
+;;     (evil-mode 1)))
+
+(req-package slime
   :init
-  (progn 
-    (evil-mode 1)))
+  (progn
+    (setq inferior-lisp-program "sbcl")))
 
 ;; add paredit hooks
 (req-package paredit
